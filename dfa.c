@@ -34,13 +34,13 @@ extern DFA new_DFA(int numStates) {
         this->tfunction[k] = (int *) calloc(129, sizeof(int));
     }
 
-    for (int r = 0; r < numStates + 2; r++) { //because of boolean value that can be 0, and calc sets all to 0
+    for (int r = 0; r < numStates + 2; r++) {
         for (int c = 0; c < 131; c++) {
             this->tfunction[r][c] = -1;
         }
     }
 
-    return this; //returns the dfa with the characteristic determined above
+    return this;
 }
 
 //// TODO: fix the function below
@@ -76,8 +76,7 @@ extern DFA new_DFA(int numStates) {
 //    //  printf("in in: %c",sym);
 //    //  printf("%d",dfa -> tfunction [src][(int)sym]);
 //    // int** tf= dfa ->tfunction;
-//    dfa->tfunction[src][(int) sym] = dst; //making a transition on sym from current state to destination
-//    //and storing it in a transition table
+//    dfa->tfunction[src][(int) sym] = dst;
 //
 //    // printf("after set trans");
 //}
@@ -169,7 +168,7 @@ extern void DFA_print(DFA dfa) {
     for (int r = 0; r < dfa->numStates + 2; r++) {
         for (int c = 0; c < 131; c++) {
             printf("%i", dfa->tfunction[r][c]);
-        }//because of boolean value that can be 0, and calc sets all to 0
+        }
         printf("\n");
     }
 
