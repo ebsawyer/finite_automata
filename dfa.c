@@ -15,7 +15,6 @@
  * only provide a partial declaration in the header file.
  */
 struct DFA {
-    int initialState;
     int numStates;
     int numInputs;
     int **tfunction;
@@ -26,16 +25,22 @@ struct DFA {
  */
 extern DFA new_DFA(int numStates) {
     DFA this = (DFA) malloc(sizeof(struct DFA));
-    this->initialState = 0;
+    if (this == NULL) {
+        return NULL; // Out of memory...
+    }
     this->numStates = numStates;
     this->numInputs = 128;
-    this->tfunction = (int **) calloc(130, sizeof(int *));
-    for (int k = 0; k < 130; k++) {
-        this->tfunction[k] = (int *) calloc(129, sizeof(int));
+    /*
+     * The array should have columns ranging from 0 - 128 (inclusive)
+     * and the number of rows should be equal to the number of states
+     */
+    this->tfunction = (int **) calloc(numStates, sizeof(int *));
+    for (int r = 0; r <= numStates - 1; r++) {
+        this->tfunction[r] = (int *) calloc(129, sizeof(int));
     }
 
-    for (int r = 0; r < numStates + 2; r++) {
-        for (int c = 0; c < 131; c++) {
+    for (int r = 0; r <= numStates - 1; r++) {
+        for (int c = 0; c <= 128; c++) {
             this->tfunction[r][c] = -1;
         }
     }
@@ -43,145 +48,126 @@ extern DFA new_DFA(int numStates) {
     return this;
 }
 
-//// TODO: fix the function below
-///**
-// * Free the given DFA.
-// */
-//extern void DFA_free(DFA dfa) {
-//
-//}
-//
-///**
-// * Return the number of states in the given DFA.
-// */
-//extern int DFA_get_size(DFA dfa) {
-//    return dfa->numStates;
-//}
-//
-///**
-// * Return the state specified by the given DFA's transition function from
-// * state src on input symbol sym.
-// */
-//extern int DFA_get_transition(DFA dfa, int src, char sym) {
-//    return dfa->tfunction[src][(int) sym];
-//}
-//
-///**
-// * For the given DFA, set the transition from state src on input symbol
-// * sym to be the state dst.
-// */
-//extern void DFA_set_transition(DFA dfa, int src, char sym, int dst) {
-//    //  printf("Bullshit in set transition\n");
-//    //  printf("in in: %d",(int)sym);
-//    //  printf("in in: %c",sym);
-//    //  printf("%d",dfa -> tfunction [src][(int)sym]);
-//    // int** tf= dfa ->tfunction;
-//    dfa->tfunction[src][(int) sym] = dst;
-//
-//    // printf("after set trans");
-//}
-//
-//// TODO: fix the two functions below
-//int string_length(char string[]) {
-//    int c = 0;
-//    while (string[c] != '\0')
-//        c++;
-//    return c;
-//}
-//
-///**
-// * Set the transitions of the given DFA for each symbol in the given str.
-// * This is a nice shortcut when you have multiple labels on an edge between
-// * two states.
-// */
-//extern void DFA_set_transition_str(DFA dfa, int src, char *str, int dst) {
-//    int strSize = string_length(str);
-//    for (int i = 0; i <= strSize; i++) {
-//        DFA_set_transition(dfa, src, str[i], dst);
-//    }
-//}
-//
-//// TODO: not sure if the below function needs to be implemented
-//
-///**
-// * Set the transitions of the given DFA for all input symbols.
-// * Another shortcut method.
-// */
-//extern void DFA_set_transition_all(DFA dfa, int src, int dst) {
-//
-//}
-//
-///**
-// * Set whether the given DFA's state is accepting or not.
-// */
-//extern void DFA_set_accepting(DFA dfa, int state, bool value) {
-//    dfa->tfunction[state][128] = value;
-//}
-//
-///**
-// * Return true if the given DFA's state is an accepting state.
-// */
-//extern bool DFA_get_accepting(DFA dfa, int state) {
-//    printf("state is %d \n", state);
-//
-//    bool temp = dfa->tfunction[state][128];
-//    printf("state is %d  and value of temp is %d\n", state, temp);
-//
-//    if (temp == 1) {
-//        return true;
-//    } else {
-//        return false;
-//    }
-//}
-//
-///**
-// * Run the given DFA on the given input string, and return true if it accepts
-// * the input, otherwise false.
-// */
-//extern bool DFA_execute(DFA dfa, char *input) {
-//
-//    int tempState = dfa->initialState;
-//    int inputSize = string_length(input);
-//    printf("I am in execute 2 and the input size is %d ", inputSize);
-//
-//    for (int i = 0; i < inputSize; i++) {
-//        //printf("I am in execute loop\n");
-//        tempState = DFA_get_transition(dfa, tempState, input[i]);
-//        if (tempState == -1) {
-//            printf("in condition");
-//            return false;
-//
-//        }
-//        printf("I am in state : %d\n", tempState);
-//    }
-//    printf("value of our last cell %d", dfa->tfunction[6][128]);
-//    return DFA_get_accepting(dfa, tempState);
-//
-//}
+// TODO: fix the function below
+/**
+ * Free the given DFA.
+ */
+extern void DFA_free(DFA dfa) {
+
+
+}
+
+/**
+ * Return the number of states in the given DFA.
+ */
+extern int DFA_get_size(DFA dfa) {
+    return dfa->numStates;
+}
+
+/**
+ * Return the state specified by the given DFA's transition function from
+ * state src on input symbol sym.
+ */
+extern int DFA_get_transition(DFA dfa, int src, char sym) {
+    return dfa->tfunction[src][(int) sym];
+}
+
+/**
+ * For the given DFA, set the transition from state src on input symbol
+ * sym to be the state dst.
+ */
+extern void DFA_set_transition(DFA dfa, int src, char sym, int dst) {
+    dfa->tfunction[src][(int) sym] = dst;
+}
+
+// TODO: fix the two functions below
+int string_length(char string[]) {
+    int c = 0;
+    while (string[c] != '\0')
+        c++;
+    return c;
+}
+
+/**
+ * Set the transitions of the given DFA for each symbol in the given str.
+ * This is a nice shortcut when you have multiple labels on an edge between
+ * two states.
+ */
+extern void DFA_set_transition_str(DFA dfa, int src, char *str, int dst) {
+    int strSize = string_length(str);
+    for (int i = 0; i <= strSize; i++) {
+        DFA_set_transition(dfa, src, str[i], dst);
+    }
+}
+
+/**
+ * Set the transitions of the given DFA for all input symbols.
+ * Another shortcut method.
+ */
+extern void DFA_set_transition_all(DFA dfa, int src, int dst) {
+    for (int i = 0; i <= 128; i++) {
+        dfa->tfunction[src][i] = dst;
+    }
+
+}
+
+/**
+ * Set whether the given DFA's state is accepting or not.
+ */
+extern void DFA_set_accepting(DFA dfa, int state, bool value) {
+    dfa->tfunction[state][128] = value;
+}
+
+/**
+ * Return true if the given DFA's state is an accepting state.
+ */
+extern bool DFA_get_accepting(DFA dfa, int state) {
+    printf("Checking if state %i is accepting...\n", state);
+
+    int temp = dfa->tfunction[state][128];
+    printf("Value of state %d is %d\n", state, temp);
+
+    if (temp == 1) {
+        printf("Accepted!");
+        return true;
+    } else {
+        printf("Not accepted!");
+        return false;
+    }
+}
+
+/**
+ * Run the given DFA on the given input string, and return true if it accepts
+ * the input, otherwise false.
+ */
+extern bool DFA_execute(DFA dfa, char *input) {
+
+    int currState = 0;
+    int inputSize = string_length(input);
+    printf("I am in execute and the input size is %d \n", inputSize);
+    printf("Current state: %d\n", currState);
+
+    for (int i = 0; i < inputSize; i++) {
+        currState = DFA_get_transition(dfa, currState, input[i]);
+        if (currState == -1) {
+            printf("Not accepted");
+            return false;
+
+        }
+        printf("Current state: %d\n", currState);
+    }
+    return DFA_get_accepting(dfa, currState);
+}
 
 /**
  * Print the given DFA to System.out.
  */
 extern void DFA_print(DFA dfa) {
     printf("This DFA has %d states\n", dfa->numStates);
-    //printf("%i", dfa->tfunction[8][0]);
-    for (int r = 0; r < dfa->numStates + 2; r++) {
-        for (int c = 0; c < 131; c++) {
-            printf("%i", dfa->tfunction[r][c]);
+    for (int r = 0; r <= dfa->numStates - 1; r++) {
+        for (int c = 0; c <= 128; c++) {
+            printf("%i ", dfa->tfunction[r][c]);
         }
         printf("\n");
     }
-
-
-//    for (int i = 0; i < dfa->numStates; i++) {
-//        for (int j = 0; j < dfa->numInputs + 1; j++) {
-//            // if(dfa -> tfunction[i][j]= 0 && i=0)
-//            //     continue;
-//            // else
-//            // {
-//            printf("%s\t", dfa->tfunction[i][j]);
-//            // }
-//        }
-//        printf("\n");
-//    }
 }
