@@ -6,8 +6,7 @@
 #define PROJECT1_NFA_H
 
 #include <stdbool.h>
-// TODO: include the #include below
-//#include "Set.h"
+#include "Set.h"
 
 /**
  * The data structure used to represent a nondeterministic finite automaton.
@@ -35,7 +34,7 @@ extern int NFA_get_size(NFA nfa);
  * Return the set of next states specified by the given NFA's transition
  * function from the given state on input symbol sym.
  */
-//extern Set NFA_get_transitions(NFA nfa, int state, char sym);
+extern Set NFA_get_transitions(NFA nfa, int state, char sym);
 
 /**
  * For the given NFA, add the state dst to the set of next states from
