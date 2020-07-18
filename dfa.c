@@ -17,7 +17,7 @@
 struct DFA {
     int numStates;
     int numInputs;
-    int **tfunction;
+    int **tFunction;
 };
 
 /**
@@ -34,14 +34,14 @@ extern DFA new_DFA(int numStates) {
      * The array should have columns ranging from 0 - 128 (inclusive)
      * and the number of rows should be equal to the number of states
      */
-    this->tfunction = (int **) calloc(numStates, sizeof(int *));
+    this->tFunction = (int **) calloc(numStates, sizeof(int *));
     for (int r = 0; r <= numStates - 1; r++) {
-        this->tfunction[r] = (int *) calloc(129, sizeof(int));
+        this->tFunction[r] = (int *) calloc(129, sizeof(int));
     }
 
     for (int r = 0; r <= numStates - 1; r++) {
         for (int c = 0; c <= 128; c++) {
-            this->tfunction[r][c] = -1;
+            this->tFunction[r][c] = -1;
         }
     }
 
@@ -69,7 +69,7 @@ extern int DFA_get_size(DFA dfa) {
  * state src on input symbol sym.
  */
 extern int DFA_get_transition(DFA dfa, int src, char sym) {
-    return dfa->tfunction[src][(int) sym];
+    return dfa->tFunction[src][(int) sym];
 }
 
 /**
@@ -77,7 +77,7 @@ extern int DFA_get_transition(DFA dfa, int src, char sym) {
  * sym to be the state dst.
  */
 extern void DFA_set_transition(DFA dfa, int src, char sym, int dst) {
-    dfa->tfunction[src][(int) sym] = dst;
+    dfa->tFunction[src][(int) sym] = dst;
 }
 
 // TODO: fix the two functions below
@@ -106,7 +106,7 @@ extern void DFA_set_transition_str(DFA dfa, int src, char *str, int dst) {
  */
 extern void DFA_set_transition_all(DFA dfa, int src, int dst) {
     for (int i = 0; i <= 128; i++) {
-        dfa->tfunction[src][i] = dst;
+        dfa->tFunction[src][i] = dst;
     }
 
 }
@@ -115,7 +115,7 @@ extern void DFA_set_transition_all(DFA dfa, int src, int dst) {
  * Set whether the given DFA's state is accepting or not.
  */
 extern void DFA_set_accepting(DFA dfa, int state, bool value) {
-    dfa->tfunction[state][128] = value;
+    dfa->tFunction[state][128] = value;
 }
 
 /**
@@ -124,7 +124,7 @@ extern void DFA_set_accepting(DFA dfa, int state, bool value) {
 extern bool DFA_get_accepting(DFA dfa, int state) {
     printf("Checking if state %i is accepting...\n", state);
 
-    int temp = dfa->tfunction[state][128];
+    int temp = dfa->tFunction[state][128];
     printf("Value of state %d is %d\n", state, temp);
 
     if (temp == 1) {
@@ -166,7 +166,7 @@ extern void DFA_print(DFA dfa) {
     printf("This DFA has %d states\n", dfa->numStates);
     for (int r = 0; r <= dfa->numStates - 1; r++) {
         for (int c = 0; c <= 128; c++) {
-            printf("%i ", dfa->tfunction[r][c]);
+            printf("%i ", dfa->tFunction[r][c]);
         }
         printf("\n");
     }
