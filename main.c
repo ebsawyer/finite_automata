@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include "dfa.h"
+#include "nfa.h"
+#include "BitSet.h"
+
 
 int main() {
 //    DFA dfa_csc173 = new_DFA(7);
@@ -16,17 +19,17 @@ int main() {
 //    DFA_print(dfa_csc173);
 //    DFA_execute(dfa_csc173, "csc173");
 
-    DFA dfa_cat = new_DFA(4);
-
-    DFA_set_transition(dfa_cat, 0, 'c', 1);
-    DFA_set_transition(dfa_cat, 1, 'a', 2);
-    DFA_set_transition(dfa_cat, 2, 't', 3);
-    DFA_set_transition_all(dfa_cat, 3, 3);
-
-    DFA_set_accepting(dfa_cat, 3, true);
-
-    DFA_print(dfa_cat);
-    DFA_execute(dfa_cat, "catsssssssss");
+//    DFA dfa_cat = new_DFA(4);
+//
+//    DFA_set_transition(dfa_cat, 0, 'c', 1);
+//    DFA_set_transition(dfa_cat, 1, 'a', 2);
+//    DFA_set_transition(dfa_cat, 2, 't', 3);
+//    DFA_set_transition_all(dfa_cat, 3, 3);
+//
+//    DFA_set_accepting(dfa_cat, 3, true);
+//
+//    DFA_print(dfa_cat);
+//    DFA_execute(dfa_cat, "catsssssssss");
 
 //    DFA even_0s = new_DFA(3);
 //    DFA_set_transition(even_0s, 0, '1', 0);
@@ -60,6 +63,19 @@ int main() {
     //DFA_execute(even_0s_1s, "110");
     //DFA_execute(even_0s_1s, "1100");
 
-    // TODO: look up DFAs to make sure the transition tables are correct
+    // TODO: look up DFAs on google to make sure the transition tables are correct
 
+    NFA end_code = new_NFA(5);
+
+    NFA_add_transition_all(end_code, 0, 0);
+    NFA_add_transition(end_code, 0, 'c', 1);
+    NFA_add_transition(end_code, 1, 'o', 2);
+    NFA_add_transition(end_code, 2, 'd', 3);
+    NFA_add_transition(end_code, 3, 'e', 4);
+    NFA_set_accepting(end_code, 4, true);
+    NFA_print(end_code);
+    printf("Final Value: %i", NFA_execute(end_code, "code"));
+
+    // TODO: make sure the execute command for DFA and NFA both works with the
+    // TODO: terminal (single and double quote issues)
 }

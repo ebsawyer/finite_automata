@@ -12,7 +12,7 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
-#include "../../../Documents-local/Courses/Sophmore/Fall/CSC_173/CSC 173/Unit 1/Project/CSC173 Project 1 Code/BitSet.h"
+#include "BitSet.h"
 
 // Use the longest int we can get
 typedef unsigned long long int bitset_t;
