@@ -65,17 +65,17 @@ int main() {
 
     // TODO: look up DFAs on google to make sure the transition tables are correct
 
-    NFA end_code = new_NFA(5);
-
-    NFA_add_transition_all(end_code, 0, 0);
-    NFA_add_transition(end_code, 0, 'c', 1);
-    NFA_add_transition(end_code, 1, 'o', 2);
-    NFA_add_transition(end_code, 2, 'd', 3);
-    NFA_add_transition(end_code, 3, 'e', 4);
-    NFA_set_accepting(end_code, 4, true);
-    NFA_print(end_code);
-    printf("Final Value: %i", NFA_execute(end_code, "code"));
+//    NFA end_code = new_NFA(5);
+//
+//    NFA_add_transition_all(end_code, 0, 0);
+//    NFA_add_transition(end_code, 0, 'c', 1);
+//    NFA_add_transition(end_code, 1, 'o', 2);
+//    NFA_add_transition(end_code, 2, 'd', 3);
+//    NFA_add_transition(end_code, 3, 'e', 4);
+//    NFA_set_accepting(end_code, 4, true);
+//    NFA_print(end_code);
+//    printf("Final Value: %i", NFA_execute(end_code, "code"));
 
     // TODO: make sure the execute command for DFA and NFA both works with the
-    // TODO: terminal (single and double quote issues)
+    // TODO: running on the terminal (single and double quote issues)
 }

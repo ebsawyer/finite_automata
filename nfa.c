@@ -160,49 +160,6 @@ extern bool NFA_execute(NFA nfa, char *input) {
     return finalVal;
 }
 
-//extern bool NFA_execute(NFA nfa, char *input, Set currState) {
-//
-//    //bool finalVal = false;
-//
-//    BitSet currStateSet = currState;
-//
-//    printf("Current state: ");
-//    BitSet_print(currStateSet);
-//    printf("\n");
-//
-//    printf("Current string: %s\n", input);
-//
-//    BitSetIterator iterator = BitSet_iterator(currStateSet);
-//    // TODO: fix the input + 1 below
-//    char *newString = input + 1;
-//    while (BitSetIterator_hasNext(iterator)) {
-//        // TODO: free() this when you're done iterating
-//        int tempState = BitSetIterator_next(iterator);
-//        printf("Temp State: %i\n", tempState);
-//        BitSet transitionState = NFA_get_transitions(nfa, tempState, input[0]);
-//        printf("New State: ");
-//        BitSet_print(transitionState);
-//        printf("\n");
-//        if ((input != NULL) && (input[0] == '\0')) {
-//            printf("input is empty\n");
-//            printf("Checking if accepting: %i\n", NFA_get_accepting(nfa, tempState));
-//            if (NFA_get_accepting(nfa, tempState) == true) {
-//                printf("Accepted!\n");
-//                return true;
-//            }
-//            //return false;
-//            break;
-//        }
-//        printf("New String: %s\n", newString);
-//        NFA_execute(nfa, newString, transitionState);
-//
-//
-//    }
-//
-//    //printf("Not acceptedlol\n");
-//    //return true;
-//}
-
 /**
  * Print the given NFA to System.out.
  */
