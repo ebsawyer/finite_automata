@@ -62,7 +62,14 @@ extern void NFA_free(NFA nfa);
 /**
  * Return the number of states in the given NFA.
  */
-extern int NFA_get_size(NFA nfa);
+extern int NFA_get_size(NFA nfa) {
+    return nfa->numStates;
+}
+
+extern BitSet **NFA_get_tFunction(NFA nfa) {
+    return nfa->tFunction;
+}
+
 
 /**
  * Return the set of next states specified by the given NFA's transition
@@ -164,7 +171,7 @@ extern bool NFA_execute(NFA nfa, char *input) {
  * Print the given NFA to System.out.
  */
 extern void NFA_print(NFA nfa) {
-    printf("This DFA has %d states\n", nfa->numStates);
+    printf("This NFA has %d states\n", nfa->numStates);
     for (int r = 0; r <= nfa->numStates - 1; r++) {
         for (int c = 0; c <= 128; c++) {
             BitSet_print(nfa->tFunction[r][c]);

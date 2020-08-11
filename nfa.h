@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include "Set.h"
+#include "BitSet.h"
 
 /**
  * The data structure used to represent a nondeterministic finite automaton.
@@ -67,6 +68,8 @@ extern bool NFA_get_accepting(NFA nfa, int state);
  * the input, otherwise false.
  */
 extern bool NFA_execute(NFA nfa, char *input);
+
+extern BitSet **NFA_get_tFunction(NFA nfa);
 
 /**
  * Print the given NFA to System.out.

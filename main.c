@@ -2,6 +2,7 @@
 #include "dfa.h"
 #include "nfa.h"
 #include "BitSet.h"
+#include "translator.h"
 
 
 int main() {
@@ -74,8 +75,32 @@ int main() {
 //    NFA_add_transition(end_code, 3, 'e', 4);
 //    NFA_set_accepting(end_code, 4, true);
 //    NFA_print(end_code);
-//    printf("Final Value: %i", NFA_execute(end_code, "code"));
+    //printf("Final Value: %i", NFA_execute(end_code, "code"));
 
     // TODO: make sure the execute command for DFA and NFA both works with the
     // TODO: running on the terminal (single and double quote issues)
+
+//    NFA h1 = new_NFA(2);
+//    NFA_add_transition(h1, 0, 'a', 0);
+//    NFA_add_transition(h1, 0, 'a', 1);
+//    NFA_add_transition(h1, 0, 'b', 0);
+//    NFA_add_transition(h1, 0, 'b', 1);
+//    NFA_add_transition(h1, 1, 'a', 1);
+//    NFA_add_transition(h1, 1, 'b', 1);
+//
+//    NFA_set_accepting(h1, 0, true);
+//    NFA_set_accepting(h1, 1, true);
+//
+//    NFA_print(h1);
+
+    NFA washington = new_NFA(20);
+    NFA_add_transition_all(washington, 0, 0);
+    NFA_add_transition(washington, 0, 'c', 1);
+    NFA_add_transition(washington, 1, 'o', 2);
+    NFA_add_transition(washington, 2, 'd', 3);
+    NFA_add_transition(washington, 3, 'e', 4);
+    NFA_set_accepting(washington, 4, true);
+    NFA_print(washington);
+
+    DFA_execute(NFA_to_DFA(end_code), "hfuhjs hi - code");
 }
