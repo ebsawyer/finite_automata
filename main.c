@@ -167,8 +167,15 @@ NFA two_c() {
 
 NFA two_d() {
 
+    NFA ending_heyo = new_NFA(5);
+    NFA_add_transition_all(ending_heyo, 0, 0);
+    NFA_add_transition(ending_heyo, 0, 'h', 1);
+    NFA_add_transition(ending_heyo, 1, 'e', 2);
+    NFA_add_transition(ending_heyo, 2, 'y', 3);
+    NFA_add_transition(ending_heyo, 3, 'o', 4);
+    NFA_set_accepting(ending_heyo, 4, true);
+    return ending_heyo;
 }
-
 
 int main() {
 
@@ -264,7 +271,7 @@ int main() {
     NFA_execute(two_c(), input);
     printf("\n\n");
 
-    printf("Testing...\n");
+    printf("Testing NFA that recognizes string ending in heyo\n");
     printf("Enter an input: ");
     fgets(input, 128, stdin);
     for (int i = 127; i >= 0; i--) {
@@ -275,6 +282,33 @@ int main() {
     NFA_execute(two_d(), input);
     printf("\n\n");
 
+    printf("Translating NFA from a) to a DFA\n");
+    DFA convert1 = NFA_to_DFA(two_a());
+    printf("States in the resulting DFA: %i\n", DFA_get_size(convert1));
+    printf("Testing DFA that recognizes strings ending in ing\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    DFA_execute(convert1, input);
+    printf("\n");
+
+    printf("Translating NFA from b) to a DFA\n");
+    DFA convert2 = NFA_to_DFA(two_b());
+    printf("States in the resulting DFA: %i\n", DFA_get_size(convert2));
+    printf("Testing DFA that recognizes strings containing ing\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    DFA_execute(convert2, input);
+    printf("\n");
 
     //testing git
 

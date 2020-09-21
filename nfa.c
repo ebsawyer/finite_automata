@@ -172,10 +172,10 @@ extern bool NFA_execute(NFA nfa, char *input) {
     BitSetIterator new = BitSet_iterator(currStateSet);
     while (BitSetIterator_hasNext(new)) {
         if (NFA_get_accepting(nfa, BitSetIterator_next(new)) == true) {
-            printf("Accepted!\n");
+            printf("Accepted!");
             finalVal = true;
         } else {
-            printf("Not accepted!\n");
+            printf("Not accepted!");
         }
     }
     return finalVal;
