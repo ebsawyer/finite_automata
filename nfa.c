@@ -110,6 +110,18 @@ extern void NFA_add_transition_all(NFA nfa, int src, int dst) {
 }
 
 /**
+ * Add a transition for the given NFA for each input symbol minus the str in the parameter.
+ */
+extern void NFA_add_transition_minus(NFA nfa, int src, char sym, int dst) {
+    for (int i = 0; i <= 128; i++) {
+        if (i != (int) sym) {
+            BitSet_insert(nfa->tFunction[src][i], dst);
+        }
+
+    }
+}
+
+/**
  * Set whether the given NFA's state is accepting or not.
  */
 extern void NFA_set_accepting(NFA nfa, int state, bool value) {

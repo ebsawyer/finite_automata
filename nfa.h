@@ -54,6 +54,11 @@ extern void NFA_add_transition_str(NFA nfa, int src, char *str, int dst);
 extern void NFA_add_transition_all(NFA nfa, int src, int dst);
 
 /**
+ * Add a transition for the given NFA for each input symbol minus the str in the parameter.
+ */
+extern void NFA_add_transition_minus(NFA nfa, int src, char sym, int dst);
+
+/**
  * Set whether the given NFA's state is accepting or not.
  */
 extern void NFA_set_accepting(NFA nfa, int state, bool value);
