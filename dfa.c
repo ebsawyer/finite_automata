@@ -122,10 +122,10 @@ extern void DFA_set_accepting(DFA dfa, int state, bool value) {
  * Return true if the given DFA's state is an accepting state.
  */
 extern bool DFA_get_accepting(DFA dfa, int state) {
-    printf("Checking if state %i is accepting...\n", state);
+    //printf("Checking if state %i is accepting...\n", state);
 
     int temp = dfa->tFunction[state][128];
-    printf("Value of state %d is %d\n", state, temp);
+    //printf("Value of state %d is %d\n", state, temp);
 
     if (temp == 1) {
         printf("Accepted!");
@@ -144,17 +144,17 @@ extern bool DFA_execute(DFA dfa, char *input) {
 
     int currState = 0;
     int inputSize = string_length(input);
-    printf("I am in execute and the input size is %d \n", inputSize);
-    printf("Current state: %d\n", currState);
+    //printf("I am in execute and the input size is %d \n", inputSize);
+    //printf("Current state: %d\n", currState);
 
     for (int i = 0; i < inputSize; i++) {
         currState = DFA_get_transition(dfa, currState, input[i]);
         if (currState == -1) {
-            printf("Not accepted");
+            printf("Not accepted!");
             return false;
 
         }
-        printf("Current state: %d\n", currState);
+        //printf("Current state: %d\n", currState);
     }
     return DFA_get_accepting(dfa, currState);
 }

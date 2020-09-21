@@ -4,13 +4,7 @@
 #include "BitSet.h"
 #include "translator.h"
 
-
-int main() {
-
-    //testing git
-
-    // 1. DFAs
-
+DFA one_a() {
     // (a) Exactly the string happy
     DFA dfa_happy = new_DFA(6);
     DFA_set_transition(dfa_happy, 0, 'h', 1);
@@ -19,8 +13,11 @@ int main() {
     DFA_set_transition(dfa_happy, 3, 'p', 4);
     DFA_set_transition(dfa_happy, 4, 'y', 5);
     DFA_set_accepting(dfa_happy, 5, true);
-    //DFA_execute(dfa_happy, "happy");
 
+    return dfa_happy;
+}
+
+DFA one_b() {
     // (b) Any string that starts with three 9’s
     DFA dfa_three_9s = new_DFA(4);
     DFA_set_transition(dfa_three_9s, 0, '9', 1);
@@ -28,8 +25,11 @@ int main() {
     DFA_set_transition(dfa_three_9s, 2, '9', 3);
     DFA_set_transition_all(dfa_three_9s, 3, 3);
     DFA_set_accepting(dfa_three_9s, 3, true);
-    //DFA_execute(dfa_three_9s, "999fsdf");
 
+    return dfa_three_9s;
+}
+
+DFA one_c() {
     // (c) Binary input with an even number of 1’s
     DFA even_1s = new_DFA(3);
     DFA_set_transition(even_1s, 0, '0', 0);
@@ -39,8 +39,11 @@ int main() {
     DFA_set_transition(even_1s, 2, '0', 2);
     DFA_set_transition(even_1s, 2, '1', 1);
     DFA_set_accepting(even_1s, 2, true);
-    //DFA_execute(even_1s, "011");
 
+    return even_1s;
+}
+
+DFA one_d() {
     // (d) Binary input with an odd number of 0’s and an even number of 1’s
     DFA odd_0s_even_1s = new_DFA(4);
     DFA_set_transition(odd_0s_even_1s, 0, '1', 1);
@@ -52,13 +55,26 @@ int main() {
     DFA_set_transition(odd_0s_even_1s, 3, '1', 2);
     DFA_set_transition(odd_0s_even_1s, 3, '0', 0);
     DFA_set_accepting(odd_0s_even_1s, 3, true);
-    //DFA_execute(odd_0s_even_1s, "110");
 
-    // (e) At least one other pattern that you think is interesting
-    DFA dfa_interesting = new_DFA(7);
+    return odd_0s_even_1s;
+}
 
-    // 2. NFAs
+DFA one_e() {
+    // (e) Exactly the string csc173
+    DFA dfa_csc173 = new_DFA(7);
+    DFA_set_transition(dfa_csc173, 0, 'c', 1);
+    DFA_set_transition(dfa_csc173, 1, 's', 2);
+    DFA_set_transition(dfa_csc173, 2, 'c', 3);
+    DFA_set_transition(dfa_csc173, 3, '1', 4);
+    DFA_set_transition(dfa_csc173, 4, '7', 5);
+    DFA_set_transition(dfa_csc173, 5, '3', 6);
+    DFA_set_accepting(dfa_csc173, 6, true);
+    return dfa_csc173;
 
+
+}
+
+NFA two_a() {
     // (a) Strings ending in ing
     NFA end_ing = new_NFA(4);
 
@@ -67,19 +83,24 @@ int main() {
     NFA_add_transition(end_ing, 1, 'n', 2);
     NFA_add_transition(end_ing, 2, 'g', 3);
     NFA_set_accepting(end_ing, 3, true);
-    //printf("Final Value: %i",  NFA_execute(end_ing, "ing"));
 
+    return end_ing;
+}
+
+NFA two_b() {
     // (b) Strings containing ing
     NFA contains_ing = new_NFA(4);
-
     NFA_add_transition_all(contains_ing, 0, 0);
     NFA_add_transition(contains_ing, 0, 'i', 1);
     NFA_add_transition(contains_ing, 1, 'n', 2);
     NFA_add_transition(contains_ing, 2, 'g', 3);
     NFA_add_transition_all(contains_ing, 3, 3);
     NFA_set_accepting(contains_ing, 3, true);
-    //printf("Final Value: %i",  NFA_execute(contains_ing, "ing"));
 
+    return contains_ing;
+}
+
+NFA two_c() {
     // (c) Strings with more than one a,g,h,i,o,s,t,orw,or more than two n’s
     NFA washington = new_NFA(20);
 
@@ -141,7 +162,151 @@ int main() {
     NFA_set_accepting(washington, 17, true);
     NFA_set_accepting(washington, 19, true);
 
-    NFA_print(washington);
+    return washington;
+}
+
+NFA two_d() {
+
+}
+
+
+int main() {
+
+
+    printf("CSC 173 Project 1 by Ethan Sawyer\n\n");
+
+    printf("Testing DFA that recognizes exactly the string happy\n");
+    printf("Enter an input: ");
+    char input[128];
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    DFA_execute(one_a(), input);
+    printf("\n\n");
+
+    printf("Testing DFA that recognizes any string that starts with three 9’s\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    DFA_execute(one_b(), input);
+    printf("\n\n");
+
+    printf("Testing DFA that recognizes binary input with an even number of 1’s\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    DFA_execute(one_c(), input);
+    printf("\n\n");
+
+    printf("Testing DFA that recognizes binary input with an odd number of 0’s and an even number of 1’s\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    DFA_execute(one_d(), input);
+    printf("\n\n");
+
+    printf("Testing DFA that recognizes exactly the string csc173\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    DFA_execute(one_e(), input);
+    printf("\n\n");
+
+    printf("Testing NFA that recognizes strings ending in ing\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    NFA_execute(two_a(), input);
+    printf("\n\n");
+
+    printf("Testing NFA that recognizes strings containing ing\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    NFA_execute(two_b(), input);
+    printf("\n\n");
+
+    printf("Testing NFA that recognizes strings with more than one a, g, h, i, o, s, t, or w, or more than two n’s\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    NFA_execute(two_c(), input);
+    printf("\n\n");
+
+    printf("Testing...\n");
+    printf("Enter an input: ");
+    fgets(input, 128, stdin);
+    for (int i = 127; i >= 0; i--) {
+        if (input[i] == '\n') {
+            input[i] = '\0';
+        }
+    }
+    NFA_execute(two_d(), input);
+    printf("\n\n");
+
+
+    //testing git
+
+    // 1. DFAs
+
+
+
+    //DFA_execute(dfa_happy, "happy");
+
+
+    //DFA_execute(dfa_three_9s, "999fsdf");
+
+
+    //DFA_execute(even_1s, "011");
+
+
+    //DFA_execute(odd_0s_even_1s, "110");
+
+    // (e) At least one other pattern that you think is interesting
+    DFA dfa_interesting = new_DFA(7);
+
+    // 2. NFAs
+
+
+    //printf("Final Value: %i",  NFA_execute(end_ing, "ing"));
+
+
+    //printf("Final Value: %i",  NFA_execute(contains_ing, "ing"));
+
+
+
+    //NFA_print(washington);
 
     //printf("Final Value: %i",  NFA_execute(washington, "nn"));
 
@@ -153,5 +318,5 @@ int main() {
     //NFA contains_ing_2 = new_NFA(4);
 
     //DFA_execute(NFA_to_DFA(end_ing), "ingy");
-    DFA_execute(NFA_to_DFA(contains_ing), "hing");
+    //DFA_execute(NFA_to_DFA(contains_ing), "hing");
 }

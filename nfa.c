@@ -144,36 +144,38 @@ extern bool NFA_execute(NFA nfa, char *input) {
     int inputSize = NFA_string_length(input);
     BitSet currStateSet = new_BitSet();
     BitSet_insert(currStateSet, 0);
-    printf("Current string: %s\n", input);
-    printf("Input size: %i\n", inputSize);
+    //printf("Current string: %s\n", input);
+    //printf("Input size: %i\n", inputSize);
 
     for (int i = 0; i < inputSize; i++) {
-        printf("Current input: %c\n", input[i]);
-        printf("Current state: ");
-        BitSet_print(currStateSet);
-        printf("\n");
+        //printf("Current input: %c\n", input[i]);
+        //printf("Current state: ");
+        //BitSet_print(currStateSet);
+        //printf("\n");
         BitSetIterator iterator = BitSet_iterator(currStateSet);
         while (BitSetIterator_hasNext(iterator)) {
             int currState = BitSetIterator_next(iterator);
-            printf("Current tested state: %i\n", currState);
+            //printf("Current tested state: %i\n", currState);
             BitSet newState = NFA_get_transitions(nfa, currState, input[i]);
-            BitSet_print(newState);
-            printf("\n");
+            //BitSet_print(newState);
+            //printf("\n");
             currStateSet = new_BitSet();
             BitSet_union(currStateSet, newState);
-            printf("Updated State: ");
-            BitSet_print(currStateSet);
-            printf("\n");
+            //printf("Updated State: ");
+            //BitSet_print(currStateSet);
+            //printf("\n");
         }
     }
     bool finalVal = false;
-    BitSet_print(currStateSet);
-    printf("\n");
+    //BitSet_print(currStateSet);
+    //printf("\n");
     BitSetIterator new = BitSet_iterator(currStateSet);
     while (BitSetIterator_hasNext(new)) {
         if (NFA_get_accepting(nfa, BitSetIterator_next(new)) == true) {
             printf("Accepted!\n");
             finalVal = true;
+        } else {
+            printf("Not accepted!\n");
         }
     }
     return finalVal;
