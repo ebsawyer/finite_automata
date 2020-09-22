@@ -178,8 +178,6 @@ NFA two_d() {
 }
 
 int main() {
-
-
     printf("CSC 173 Project 1 by Ethan Sawyer\n\n");
 
     printf("Testing DFA that recognizes exactly the string happy\n");
@@ -282,10 +280,10 @@ int main() {
     NFA_execute(two_d(), input);
     printf("\n\n");
 
-    printf("Translating NFA from a) to a DFA\n");
+    printf("Translating NFA from 1a) to a DFA\n");
     DFA convert1 = NFA_to_DFA(two_a());
     printf("States in the resulting DFA: %i\n", DFA_get_size(convert1));
-    printf("Testing DFA that recognizes strings ending in ing\n");
+    printf("Testing new DFA that recognizes strings ending in ing\n");
     printf("Enter an input: ");
     fgets(input, 128, stdin);
     for (int i = 127; i >= 0; i--) {
@@ -294,12 +292,12 @@ int main() {
         }
     }
     DFA_execute(convert1, input);
-    printf("\n");
+    printf("\n\n");
 
-    printf("Translating NFA from b) to a DFA\n");
+    printf("Translating NFA from 2b) to a DFA\n");
     DFA convert2 = NFA_to_DFA(two_b());
     printf("States in the resulting DFA: %i\n", DFA_get_size(convert2));
-    printf("Testing DFA that recognizes strings containing ing\n");
+    printf("Testing new DFA that recognizes strings containing ing\n");
     printf("Enter an input: ");
     fgets(input, 128, stdin);
     for (int i = 127; i >= 0; i--) {
@@ -308,49 +306,5 @@ int main() {
         }
     }
     DFA_execute(convert2, input);
-    printf("\n");
-
-    //testing git
-
-    // 1. DFAs
-
-
-
-    //DFA_execute(dfa_happy, "happy");
-
-
-    //DFA_execute(dfa_three_9s, "999fsdf");
-
-
-    //DFA_execute(even_1s, "011");
-
-
-    //DFA_execute(odd_0s_even_1s, "110");
-
-    // (e) At least one other pattern that you think is interesting
-    DFA dfa_interesting = new_DFA(7);
-
-    // 2. NFAs
-
-
-    //printf("Final Value: %i",  NFA_execute(end_ing, "ing"));
-
-
-    //printf("Final Value: %i",  NFA_execute(contains_ing, "ing"));
-
-
-
-    //NFA_print(washington);
-
-    //printf("Final Value: %i",  NFA_execute(washington, "nn"));
-
-    // (e) At least one other pattern that you think is interesting
-
-    // 3. Translator
-
-    //NFA end_ing_2 = new_NFA(4);
-    //NFA contains_ing_2 = new_NFA(4);
-
-    //DFA_execute(NFA_to_DFA(end_ing), "ingy");
-    //DFA_execute(NFA_to_DFA(contains_ing), "hing");
+    printf("\n\n");
 }
