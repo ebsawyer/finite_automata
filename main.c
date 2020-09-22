@@ -3,6 +3,7 @@
 #include "nfa.h"
 #include "BitSet.h"
 #include "translator.h"
+#include <string.h>
 
 DFA one_a() {
     // (a) Exactly the string happy
@@ -177,134 +178,92 @@ NFA two_d() {
     return ending_heyo;
 }
 
+void replDFA(DFA dfa_repl) {
+    char input1[128];
+    while (strcmp("quit", input1) != 0) {
+        printf("Enter an input (or quit): ");
+        fgets(input1, 128, stdin);
+        for (int i = 127; i >= 0; i--) {
+            if (input1[i] == '\n') {
+                input1[i] = '\0';
+            }
+        }
+        if (strcmp("quit", input1) != 0) {
+            DFA_execute(dfa_repl, input1);
+            printf("\n");
+        }
+    }
+}
+
+void replNFA(NFA nfa_repl) {
+    char input1[128];
+    while (strcmp("quit", input1) != 0) {
+        printf("Enter an input (or quit): ");
+        fgets(input1, 128, stdin);
+        for (int i = 127; i >= 0; i--) {
+            if (input1[i] == '\n') {
+                input1[i] = '\0';
+            }
+        }
+        if (strcmp("quit", input1) != 0) {
+            NFA_execute(nfa_repl, input1);
+            printf("\n");
+        }
+    }
+
+}
+
 int main() {
     printf("CSC 173 Project 1 by Ethan Sawyer\n\n");
 
     printf("Testing DFA that recognizes exactly the string happy\n");
-    printf("Enter an input: ");
     char input[128];
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    DFA_execute(one_a(), input);
-    printf("\n\n");
+    replDFA(one_a());
+    printf("\n");
 
     printf("Testing DFA that recognizes any string that starts with three 9’s\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    DFA_execute(one_b(), input);
-    printf("\n\n");
+    replDFA(one_b());
+    printf("\n");
 
     printf("Testing DFA that recognizes binary input with an even number of 1’s\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    DFA_execute(one_c(), input);
-    printf("\n\n");
+    replDFA(one_c());
+    printf("\n");
 
     printf("Testing DFA that recognizes binary input with an odd number of 0’s and an even number of 1’s\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    DFA_execute(one_d(), input);
-    printf("\n\n");
+    replDFA(one_d());
+    printf("\n");
 
     printf("Testing DFA that recognizes exactly the string csc173\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    DFA_execute(one_e(), input);
-    printf("\n\n");
+    replDFA(one_e());
+    printf("\n");
 
     printf("Testing NFA that recognizes strings ending in ing\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    NFA_execute(two_a(), input);
-    printf("\n\n");
+    replNFA(two_a());
+    printf("\n");
 
     printf("Testing NFA that recognizes strings containing ing\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    NFA_execute(two_b(), input);
-    printf("\n\n");
+    replNFA(two_b());
+    printf("\n");
 
     printf("Testing NFA that recognizes strings with more than one a, g, h, i, o, s, t, or w, or more than two n’s\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    NFA_execute(two_c(), input);
-    printf("\n\n");
+    replNFA(two_c());
+    printf("\n");
 
     printf("Testing NFA that recognizes string ending in heyo\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    NFA_execute(two_d(), input);
-    printf("\n\n");
+    replNFA(two_d());
+    printf("\n");
 
     printf("Translating NFA from 1a) to a DFA\n");
     DFA convert1 = NFA_to_DFA(two_a());
     printf("States in the resulting DFA: %i\n", DFA_get_size(convert1));
     printf("Testing new DFA that recognizes strings ending in ing\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    DFA_execute(convert1, input);
-    printf("\n\n");
+    replDFA(convert1);
+    printf("\n");
 
     printf("Translating NFA from 2b) to a DFA\n");
     DFA convert2 = NFA_to_DFA(two_b());
     printf("States in the resulting DFA: %i\n", DFA_get_size(convert2));
     printf("Testing new DFA that recognizes strings containing ing\n");
-    printf("Enter an input: ");
-    fgets(input, 128, stdin);
-    for (int i = 127; i >= 0; i--) {
-        if (input[i] == '\n') {
-            input[i] = '\0';
-        }
-    }
-    DFA_execute(convert2, input);
-    printf("\n\n");
+    replDFA(convert2);
+    printf("\n");
 }
